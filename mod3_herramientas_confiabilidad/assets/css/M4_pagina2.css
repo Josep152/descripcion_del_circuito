@@ -1,0 +1,241 @@
+.fmeca-container {
+    max-width: 1400px;
+    margin: 0 auto 100px auto;
+}
+
+/* Logo responsive */
+.logo-container {
+    text-align: right;
+}
+
+.logo {
+    width: clamp(100px, 15vw, 200px);
+    height: auto;
+    margin: 3vh 3vh;
+}
+
+.instruction-box {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 2px solid #e2e8f0;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) auto;
+    max-width: 900px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+}
+
+.instruction-box h3 {
+    color: var(--color-azul);
+    margin-bottom: 10px;
+    font-size: var(--font-5);
+    font-weight: 600;
+}
+
+.instruction-box p {
+    color: #4a5568;
+    margin: 0;
+    font-size: var(--font-6);
+    line-height: 1.5;
+}
+
+.reference-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.ref-btn {
+    background: white;
+    border: 2px solid var(--color-azul);
+    border-radius: var(--border-radius-md);
+    padding: 0.75rem 1.5rem;
+    color: var(--color-azul);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.ref-btn:hover {
+    background: var(--color-azul);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(3, 23, 149, 0.3);
+}
+
+.fmeca-table-container {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
+}
+
+.fmeca-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    min-width: 1200px;
+}
+
+.fmeca-table th {
+    background: var(--color-azul);
+    color: white;
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #ddd;
+    font-size: 0.8rem;
+    line-height: 1.2;
+}
+
+.fmeca-table td {
+    padding: 0.75rem 0.5rem;
+    border: 1px solid #ddd;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.8rem;
+}
+
+.fmeca-table tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.original-columns {
+    background: #d2691e !important;
+    color: #2d3748;
+}
+
+.improved-columns {
+    background: #2d8f47 !important;
+    color: white;
+}
+
+.input-cell {
+    padding: 0.25rem;
+}
+
+.fmeca-input {
+    width: 50px;
+    height: 35px;
+    text-align: center;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.fmeca-input:focus {
+    border-color: var(--color-azul);
+    outline: none;
+}
+
+.npr-display {
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    color: white;
+}
+
+.npr-high {
+    background: #dc3545;
+}
+
+.npr-medium {
+    background: #fd7e14;
+}
+
+.npr-low {
+    background: #28a745;
+}
+
+.process-cell {
+    background: #e3f2fd;
+    font-weight: 600;
+    text-align: left;
+    padding-left: 1rem;
+}
+
+.description-cell {
+    text-align: left;
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    width: 90%;
+    max-width: 1000px;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #000;
+}
+
+.placeholder-img {
+    width: 100%;
+    /* height: 400px; */
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    border-radius: var(--border-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #64748b;
+    margin: 1rem 0;
+}
+
+@media (max-width: 768px) {
+    .fmeca-container {
+        padding: 1rem;
+    }
+
+    .reference-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ref-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .fmeca-table {
+        font-size: 0.75rem;
+    }
+
+    .fmeca-input {
+        width: 40px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+}

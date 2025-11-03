@@ -1,0 +1,42 @@
+#barra {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  margin: auto;
+  pointer-events: none;
+}
+
+#sidebar.close #barra-titulo {
+  display: none;
+}
+
+#progreso-container {
+  width: 100%;
+  background-color: var(--color-blanco);
+  /* border-radius: 12px; */
+  height: 25px;
+  position: relative;
+  margin-top: .3rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: .5rem;
+  /* border: 1px solid var(--color-negro); */
+}
+
+#progreso-barra {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  transition: width 0.5s ease-in-out;
+}
+
+#progreso-texto {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 25px;
+  font-weight: bold;
+  color: var(--color-negro);
+  transition: all 0.3s ease;
+}

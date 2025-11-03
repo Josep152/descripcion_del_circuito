@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script src="js/courseConfig.js"></script>
+</head>
+
+<body>
+    <button class="back-page-btn" style="left: 0;" onclick="backPage()">
+        <span class="arrow">❮</span>
+    </button>
+
+    <div class="audio-control-wrapper">
+        <div class="audio-player-container" id="audioContainer">
+            <!-- Indicadores mejorados de que se puede expandir -->
+            <div class="expand-indicators">
+                <div class="expand-dot"></div>
+                <div class="expand-dot"></div>
+                <div class="expand-dot"></div>
+            </div>
+
+            <!-- Botón de play/pause -->
+            <button class="play-pause-btn" id="playPauseBtn">
+                <svg id="playIcon" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                </svg>
+                <svg id="pauseIcon" viewBox="0 0 24 24" style="display: none">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                </svg>
+            </button>
+
+            <!-- Controles expandidos -->
+            <div class="expanded-controls">
+                <div class="controls-column">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar">
+                            <div class="progress-fill" id="progressFill">
+                                <div class="progress-thumb" id="progressThumb"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="volume-control">
+                        <button class="volume-btn" id="volumeToggle">
+                            <svg id="volumeIcon" viewBox="0 0 24 24">
+                                <path
+                                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+                            </svg>
+                            <svg id="muteIcon" viewBox="0 0 24 24" style="display: none">
+                                <path
+                                    d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+                            </svg>
+                        </button>
+
+                        <div class="volume-slider" id="volumeSlider">
+                            <div class="volume-fill" id="volumeFill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="close-btn" id="closeBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Audio element -->
+            <audio id="audioPlayer" preload="metadata">
+                <source src="assets/audios/bienvenidos.wav" type="audio/wav" />
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+    </div>
+
+    <div class="background-container">
+        <img id="background_image" src="" alt="Fondo" class="background-image">
+    </div>
+
+    <img id="logo" src="" alt="Logo" class="logo">
+
+    <main class="content">
+        <h3 class="welcome-text">Bienvenido a </h3>
+        <h1 id="title_course">Análisis de Criticidad
+        </h1>
+        <button id="btnModulos" class="start-button"
+            onclick="document.querySelector('.container').scrollIntoView({behavior: 'smooth'})">
+            Comenzar
+            <span class="arrow">❯</span>
+        </button>
+    </main>
+    <div class="scroll-indicator">
+        <span class="scroll-arrow">↓</span>
+        <span class="scroll-text">Desliza para ver más</span>
+    </div>
+
+    <div class="container">
+        <div class="learning-objectives">
+            <h2 class="section-title gradient-text">Logros de Aprendizaje</h2>
+            <h4 class="objectives-text">
+                Entender las estrategias de mantenimiento y su aplicación así como el manejo de los datos de fallas en
+                una planta.
+
+            </h4>
+        </div>
+        <div class="modules-container">
+            <div class="module-card hover-borde" onclick="cambiarModulo('views/M1_inicio.html')" data-module="1">
+                <div class="module-number">01</div>
+                <div class="card-content">
+                    <h3 class="module-title">Introducción</h3>
+                    <p class="module-description">El análisis de criticidad es una metodología que establece jerarquías
+                        de equipos según su impacto en el negocio, usando una figura de mérito proporcional al riesgo.
+                    </p>
+                </div>
+            </div>
+            <div class="module-card hover-borde" onclick="cambiarModulo('views/M2_inicio.html')" data-module="2">
+                <div class="module-number">02</div>
+                <div class="card-content">
+                    <h3 class="module-title">Criterios de Criticidad
+                    </h3>
+                    <p class="module-description">Los criterios evalúan cuatro aspectos fundamentales: seguridad , medio
+                        ambiente , producción , y costos de reparación .</p>
+                </div>
+            </div>
+            <div class="module-card hover-borde" onclick="cambiarModulo('views/M3_inicio.html')" data-module="3">
+                <div class="module-number">03</div>
+                <div class="card-content">
+                    <h3 class="module-title">Cálculo de Nivel de Criticidad
+                    </h3>
+                    <p class="module-description">Se asigna un valor a cada criterio de criticidad y se cargan en una
+                        tabla por activo evaluado, permite clasificar los equipos en niveles de criticidad
+                        (Alta/Media/Baja).</p>
+                </div>
+            </div>
+
+
+            <div class="module-card hover-borde" onclick="cambiarModulo('views/M4_inicio.html')" data-module="4">
+                <div class="module-number">04</div>
+                <div class="card-content">
+                    <h3 class="module-title">Ventajas del Análisis de Criticidad
+
+                    </h3>
+                    <p class="module-description">Permite identificar riesgos operativos precisos y determinar qué
+                        activos son más vitales para la organización.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/audioPlayer.js"></script>
+    <script src="js/SCORM_Config.js"></script>
+    <script src="../menu_principal/js/SCORM.js"></script>
+    <script>
+        function cambiarModulo(modulo) {
+            window.location.href = modulo;
+        }
+
+        function backPage() {
+            window.location.href = '../menu_principal/vista_general.html'
+        }
+
+        // Inicializar desde configuración global
+        ScormManager.initFromConfig();
+    // Mostrar modal para continuar donde lo dejó
+    ScormManager.levantarModal();
+    
+        // Función para actualizar el estado de las tarjetas
+        function actualizarEstadoModulos() {
+            const cards = document.querySelectorAll(".module-card");
+            const visitadas = ScormManager.obtenerPaginasVisitadas() || [];
+
+            cards.forEach(card => {
+                const moduloNum = parseInt(card.dataset.module);
+
+                // Regla: habilita si ya visitó la página del módulo anterior
+                if (moduloNum > 1) {
+                    const anterior = "M" + (moduloNum) + "_inicio.html";
+                    if (!visitadas.includes(anterior)) {
+                        card.classList.add("disabled");
+                        card.removeAttribute("onclick");
+                    }
+                }
+            });
+        }
+
+        // Ejecutar después de que ScormManager esté listo
+        window.addEventListener("load", () => {
+            // Pequeño delay para asegurar que SCORM esté completamente inicializado
+            setTimeout(actualizarEstadoModulos, 10);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
+    <link rel="stylesheet" href="../assets/css/ProgressBar.css">
+    <script type="text/javascript" src="../js/sidebar.js" defer></script>
+    <title>Componentes de la Estrategia de Mantenimiento</title>
+    <style>
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: var(--font-2);
+            /* font-weight: 300; */
+            margin-bottom: 10px;
+            /* text-shadow: 0 2px 10px rgba(0,0,0,0.3); */
+        }
+
+        .header p {
+            font-size: var(--font-5);
+            /* opacity: 0.9; */
+            color: var(--color-azul);
+            font-weight: 600;
+        }
+
+        /* Logo responsive */
+        .logo-container {
+            text-align: right;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: clamp(100px, 15vw, 200px);
+            height: auto;
+            margin: 3vh 3vh;
+        }
+
+        .responsive-image {
+            width: 100%;
+            height: auto;
+            max-width: 800px;
+            /* Tamaño máximo en pantallas grandes */
+            margin: 20px auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Container para la imagen con padding responsive */
+        .image-container {
+            padding: 0 20px;
+            margin: 30px 0;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: var(--font-6);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn.active {
+            background: var(--color-azul-degradado);
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+
+        }
+
+        .card h3 {
+            color: #4a5568;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--color-azul-degradado);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .card p {
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .drag-drop-game {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+
+        .game-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #4a5568;
+            margin-bottom: 30px;
+        }
+
+        .game-instructions {
+            text-align: center;
+            background: #e8f4fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            color: #2d3748;
+            font-weight: 500;
+            font-size: var(--font-6);
+        }
+
+        .maintenance-types {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .maintenance-type {
+            background: #f7fafc;
+            border: 3px dashed #cbd5e0;
+            border-radius: 15px;
+            padding: 30px 20px;
+            min-height: 120px;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .maintenance-type.drag-over {
+            border-color: #4299e1;
+            background: #ebf8ff;
+            transform: scale(1.05);
+        }
+
+        .maintenance-type h4 {
+            color: #2d3748;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .draggable-items {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .draggable-item {
+            background: var(--color-azul-degradado);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: grab;
+            user-select: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .draggable-item img {
+
+            height: auto;
+            border-radius: 10px;
+            pointer-events: none;
+            /* evita problemas al arrastrar */
+        }
+
+        .draggable-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .draggable-item.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+
+        .success-message {
+            display: none;
+            background: #c6f6d5;
+            color: #2f855a;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: var(--font-6);
+        }
+
+        .reset-btn {
+            background: var(--color-azul-degradado);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 20px auto;
+            display: block;
+            font-size: var(--font-6);
+        }
+
+        .reset-btn:hover {
+            background: var(--color-azul-degradado);
+            transform: translateY(-2px);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a0aec0;
+            font-style: italic;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .maintenance-types {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .draggable-items {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .drag-drop-game {
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 20px;
+                margin-top: 30px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="back-page-btn" onclick="backPage()">
+        <span class="arrow">❮</span>
+    </button>
+    <nav id="sidebar" class="close">
+        <!-- Logo y botón de toggle -->
+        <div id="logo-seccion">
+            <a href="../index.html">
+                <img src="../assets/images/logo_blanco.png" height="10px" alt="logo">
+            </a>
+            <button id="toggle-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
+                    <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Barra de Progreso del curso -->
+        <div id="barra">
+            <span id="barra-titulo"><strong>Progreso del Curso</strong></span>
+            <div id="progreso-container">
+                <div id="progreso-barra"></div>
+                <span id="progreso-texto">0%</span>
+            </div>
+        </div>
+
+        <!-- Menú principal -->
+        <div id="menu-container"></div>
+    </nav>
+
+    <div class="audio-control-wrapper">
+        <div class="audio-player-container" id="audioContainer">
+            <!-- Indicadores mejorados de que se puede expandir -->
+            <div class="expand-indicators">
+                <div class="expand-dot"></div>
+                <div class="expand-dot"></div>
+                <div class="expand-dot"></div>
+            </div>
+
+            <!-- Botón de play/pause -->
+            <button class="play-pause-btn" id="playPauseBtn">
+                <svg id="playIcon" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                </svg>
+                <svg id="pauseIcon" viewBox="0 0 24 24" style="display: none">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                </svg>
+            </button>
+
+            <!-- Controles expandidos -->
+            <div class="expanded-controls">
+                <div class="controls-column">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar">
+                            <div class="progress-fill" id="progressFill">
+                                <div class="progress-thumb" id="progressThumb"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="volume-control">
+                        <button class="volume-btn" id="volumeToggle">
+                            <svg id="volumeIcon" viewBox="0 0 24 24">
+                                <path
+                                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+                            </svg>
+                            <svg id="muteIcon" viewBox="0 0 24 24" style="display: none">
+                                <path
+                                    d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+                            </svg>
+                        </button>
+
+                        <div class="volume-slider" id="volumeSlider">
+                            <div class="volume-fill" id="volumeFill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="close-btn" id="closeBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Audio element -->
+            <audio id="audioPlayer" preload="metadata">
+                <source src="../assets/audios/M3_pagina1_vision.wav" type="audio/wav" />
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+    </div>
+
+    <div class="logo-container">
+        <img src="../assets/images/logo_color.png" alt="Logo AngloAmerican" class="logo">
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="fade-in gradient-text2 font-weight: normal;">Componentes de la Estrategia de Mantenimiento</h1>
+            <p>Explora los elementos fundamentales del mantenimiento industrial</p>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-btn active" onclick="showSection('overview')">Visión General</button>
+            <button class="nav-btn" onclick="showSection('components')">Componentes</button>
+            <button class="nav-btn" onclick="showSection('analysis')">Análisis</button>
+            <button class="nav-btn" onclick="showSection('game')">Actividad Interactiva</button>
+        </div>
+
+        <div id="overview" class="content-section active">
+            <div class="cards-grid">
+                <div class="card">
+                    <h3 style="color: var(--color-azul);">
+                        <div class="card-icon">🛠️</div>CMMS
+                    </h3>
+                    <p class="gradient-text"><strong>Sistema de gestión de mantenimiento informatizado</strong></p>
+                    <p>Programa de software que realiza seguimiento de activos y órdenes de trabajo, ayudando a
+                        planificar el mantenimiento y organizando datos sobre materiales y recursos necesarios.</p>
+                </div>
+
+                <div class="card">
+                    <h3 style="color: var(--color-azul);">
+                        <div class="card-icon">📋</div>Planificación
+                    </h3>
+                    <p class="gradient-text"><strong>Planificación del mantenimiento</strong></p>
+                    <p>Proceso crucial que involucra organización y programación de actividades para asegurar el óptimo
+                        funcionamiento, maximizar eficiencia y minimizar tiempo de inactividad.</p>
+                </div>
+
+                <div class="card">
+                    <h3 style="color: var(--color-azul);">
+                        <div class="card-icon">👁️</div>Supervisión
+                    </h3>
+                    <p class="gradient-text"><strong>Supervisión de ejecución</strong></p>
+                    <p>Proceso de dirigir y controlar la ejecución de actividades de mantenimiento para garantizar
+                        correcto funcionamiento y prolongar vida útil de equipos e instalaciones.</p>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="../assets/images/M3_pagina1/1.png" class="responsive-image" style="max-width: 500px;">
+            </div>
+        </div>
+
+        <div id="components" class="content-section">
+            <div class="cards-grid">
+                <div class="card">
+                    <h3 style="color: var(--color-azul);">
+                        <div class="card-icon">🚨</div>Notificación de Incidentes
+                    </h3>
+                    <p>Una vez que una máquina o pieza falla, el equipo de mantenimiento informa del incidente para
+                        documentación y toma de medidas correctivas.</p>
+
+                </div>
+
+                <div class="card">
+                    <h3 style="color: var(--color-azul);">
+                        <div class="card-icon">🔍</div>Análisis de Causa Raíz (ACR)
+                    </h3>
+                    <p>Proceso sistemático para identificar causas fundamentales de problemas, en lugar de tratar solo
+                        síntomas superficiales. Permite abordar problemas de raíz y prevenir recurrencia.</p>
+
+                </div>
+
+            </div>
+            <div class="image-container">
+                <img src="../assets/images/M3_pagina1/3.png" class="responsive-image" style="max-width: 700px;">
+            </div>
+        </div>
+
+        <div id="analysis" class="content-section">
+            <div class="card">
+                <h3 style="color: var(--color-azul);">Análisis de Modos y Efectos de Falla (FMEA)</h3>
+                <p><strong class="gradient-text">Metodología sistemática</strong> utilizada para identificar y evaluar
+                    posibles fallas en sistemas, productos o procesos, así como sus consecuencias.</p>
+                <p><strong class="gradient-text">Objetivo principal:</strong> Prevenir fallas antes de que ocurran,
+                    mitigando riesgos asociados y mejorando confiabilidad y seguridad.</p>
+                <div class="image-container">
+                    <img src="../assets/images/M3_pagina1/4.png" class="responsive-image" style="max-width: 500px;">
+                </div>
+            </div>
+        </div>
+
+        <div id="game" class="content-section">
+            <div class="drag-drop-game">
+                <div class="instruction-box">
+                    <img src="../assets/gif/drag-and-drop.gif" alt="drag-and-drop-gif" class="gif">
+                    <p>En base a los tipos de estrategia de mantenimiento, arrastra cada imagen al tipo de mantenimiento
+                        que le corresponde</p>
+                </div>
+
+                <div class="maintenance-types">
+                    <div class="maintenance-type" data-type="preventivo">
+                        <h4>PREVENTIVO</h4>
+                        <p
+                            style="font-size: var(--font-6); text-align: center; color: var(--color-gris); margin-top: 10px;">
+                            Mantenimiento planificado antes de fallas</p>
+                    </div>
+                    <div class="maintenance-type" data-type="correctivo">
+                        <h4>CORRECTIVO</h4>
+                        <p
+                            style="font-size: var(--font-6); text-align: center; color: var(--color-gris); margin-top: 10px;">
+                            Reparación después de fallas</p>
+                    </div>
+                    <div class="maintenance-type" data-type="predictivo">
+                        <h4>PREDICTIVO</h4>
+                        <p
+                            style="font-size: var(--font-6); text-align: center; color: var(--color-gris); margin-top: 10px;">
+                            Basado en monitoreo de condiciones</p>
+                    </div>
+                </div>
+
+                <div class="draggable-items">
+                    <div class="draggable-item" draggable="true" data-answer="correctivo">
+                        <img src="../assets/images/M3_pagina1/preventivo.jpg" alt="Mantenimiento correctivo">
+                    </div>
+                    <div class="draggable-item" draggable="true" data-answer="preventivo">
+                        <img src="../assets/images/M3_pagina1/correctivo.jpg" alt="Mantenimiento preventivo">
+                    </div>
+                    <div class="draggable-item" draggable="true" data-answer="predictivo">
+                        <img src="../assets/images/M3_pagina1/predictivo.jpg" alt="Mantenimiento predictivo">
+                    </div>
+                </div>
+
+                <div class="success-message" id="successMessage">
+                    🎉 ¡Excelente! Has completado correctamente la actividad
+                </div>
+
+                <button class="reset-btn" onclick="resetGame()">Reiniciar Actividad</button>
+            </div>
+        </div>
+    </div>
+    <button id="continueBtn" style="position: fixed !important; bottom: 0.5rem; right: 0.5rem;" class="start-button"
+        onclick="goToNextPage()">Continuar <span class="arrow">❯</span></button>
+    <script src="../js/audioPlayer.js"></script>
+    <script src="../js/SCORM_Config.js"></script>
+    <script src="../../menu_principal/js/SCORM.js"></script>
+    <script src="../js/scorm-autosave.js"></script>
+    <script>
+        const paginaActual = "M3_pagina1.html";
+        function goToNextPage() {
+            ScormManager.guardarProgreso(paginaActual);
+            window.location.href = 'M4_inicio.html';
+        }
+
+        function backPage() {
+            window.location.href = 'M3_inicio.html';
+        }
+
+        // Iniciar SCORM
+        ScormManager.initFromConfig();
+
+        let processAudioPlayer = null;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            processAudioPlayer = document.getElementById('audioPlayer');
+            const btn = document.getElementById("continueBtn");
+
+            const visitadas = ScormManager.obtenerPaginasVisitadas();
+            if (visitadas.includes(paginaActual)) {
+                // Ya visitada → habilitar botón sin obligar a repetir
+                btn.style.display = "block";
+            } else {
+                // No visitada → se mantiene deshabilitado hasta que termine interactivo
+                btn.style.display = "none";
+            }
+
+            window.habilitarContinuar = function () {
+                btn.style.display = "block";
+            };
+
+            // ✅ Actualizar barra de progreso (solo visual)
+            const progreso = ScormManager.cargarProgreso();
+            const porcentaje = progreso.score ? parseInt(progreso.score) : 0;
+
+            const barra = document.getElementById("progreso-barra");
+            const texto = document.getElementById("progreso-texto");
+
+            if (barra && texto) {
+                barra.style.width = porcentaje + "%";
+                texto.textContent = porcentaje + "%";
+            }
+        });
+
+
+        window.addEventListener("DOMContentLoaded", () => {
+            shuffleItems();
+        });
+
+        // Lista de secciones
+        const sections = ["components", "analysis", "game"];
+
+        const sectionAudios = {
+            "overview": "../assets/audios/M3_pagina1_vision.wav",
+            "components": "../assets/audios/M3_pagina1_components.wav",
+            "analysis": "../assets/audios/M3_pagina1_analysis.wav",
+            "game": "../assets/audios/M3_pagina1_game.wav"
+        };
+
+        // Objeto para marcar visitadas
+        let section_visited = {};
+
+        // Inicializar en false
+        sections.forEach(sec => section_visited[sec] = false);
+
+        // Navegación entre secciones
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+
+            // Actualizar botones de navegación
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Marcar la sección como visitada
+            section_visited[sectionId] = true;
+
+            // Reproducir audio de la sección si existe
+            if (sectionAudios[sectionId]) {
+                playAudio(sectionAudios[sectionId]);
+            }
+
+            // Revisar si todas ya fueron visitadas
+            checkAllVisited();
+        }
+
+        function playAudio(audioSrc) {
+            if (processAudioPlayer) {
+                processAudioPlayer.src = audioSrc;
+                processAudioPlayer.play();
+            }
+        }
+
+        function checkAllVisited() {
+            const allVisited = Object.values(section_visited).every(v => v === true);
+            if (allVisited) {
+                document.getElementById("continueBtn").style.display = "block";
+            }
+        }
+
+        // Funcionalidad drag and drop
+        let draggedElement = null;
+        let correctPlacements = 0;
+
+        // Eventos para elementos arrastrables
+        const draggableItems = document.querySelectorAll('.draggable-item');
+        draggableItems.forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                draggedElement = e.target;
+                e.target.classList.add('dragging');
+            });
+
+            item.addEventListener('dragend', (e) => {
+                e.target.classList.remove('dragging');
+                draggedElement = null;
+            });
+        });
+
+
+
+        // Eventos para zonas de drop
+        const dropZones = document.querySelectorAll('.maintenance-type');
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('drag-over');
+            });
+
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('drag-over');
+            });
+
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('drag-over');
+
+                if (draggedElement) {
+                    const correctAnswer = draggedElement.dataset.answer;
+                    const zoneType = zone.dataset.type;
+
+                    if (correctAnswer === zoneType) {
+                        // Respuesta correcta
+                        zone.appendChild(draggedElement);
+                        draggedElement.style.background = 'linear-gradient(135deg, #48bb78, #38a169)';
+                        draggedElement.style.cursor = 'default';
+                        draggedElement.draggable = false;
+                        correctPlacements++;
+
+                        // Verificar si se completó el juego
+                        if (correctPlacements === 3) {
+                            setTimeout(() => {
+                                document.getElementById('successMessage').style.display = 'block';
+                            }, 500);
+                        }
+                    } else {
+                        // Respuesta incorrecta - animar rechazo
+                        draggedElement.style.background = 'linear-gradient(135deg, #e53e3e, #c53030)';
+                        setTimeout(() => {
+                            draggedElement.style.background = 'var(--color-azul-degradado)';
+                        }, 1000);
+                    }
+                }
+            });
+        });
+        function shuffleItems() {
+            const container = document.querySelector('.draggable-items');
+            const items = Array.from(container.children);
+
+            // Mezclar con Fisher-Yates
+            for (let i = items.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [items[i], items[j]] = [items[j], items[i]];
+            }
+
+            // Volver a agregar en orden aleatorio
+            items.forEach(item => container.appendChild(item));
+        }
+
+
+        // Función para reiniciar el juego
+        function resetGame() {
+            correctPlacements = 0;
+            document.getElementById('successMessage').style.display = 'none';
+
+            const draggableItems = document.querySelectorAll('.draggable-item');
+            const itemsContainer = document.querySelector('.draggable-items');
+
+            draggableItems.forEach(item => {
+                item.style.background = 'var(--color-azul-degradado)';
+                item.style.cursor = 'grab';
+                item.draggable = true;
+                itemsContainer.appendChild(item);
+            });
+
+            shuffleItems();
+        }
+
+        draggableItems.forEach(item => {
+            item.addEventListener('touchstart', (e) => {
+                draggedElement = e.target;
+                originalParent = draggedElement.parentElement;
+
+                const touch = e.touches[0];
+                startX = touch.pageX;
+                startY = touch.pageY;
+
+                draggedElement.classList.add('dragging');
+                draggedElement.style.transition = "none"; // evitar animaciones raras
+            });
+
+            item.addEventListener('touchmove', (e) => {
+                if (!draggedElement) return;
+
+                const touch = e.touches[0];
+                const elem = draggedElement;
+
+                elem.style.position = 'absolute';
+                elem.style.left = `${touch.pageX - elem.offsetWidth / 2}px`;
+                elem.style.top = `${touch.pageY - elem.offsetHeight / 2}px`;
+                elem.style.zIndex = 1000;
+
+                // Scroll automático si arrastra arriba o abajo
+                const scrollSpeed = 10;
+                if (touch.clientY < 80) {
+                    window.scrollBy(0, -scrollSpeed);
+                } else if (touch.clientY > window.innerHeight - 80) {
+                    window.scrollBy(0, scrollSpeed);
+                }
+
+                e.preventDefault();
+            });
+
+            item.addEventListener('touchend', (e) => {
+                if (!draggedElement) return;
+
+                const touch = e.changedTouches[0];
+                draggedElement.classList.remove('dragging');
+
+                let dropped = false;
+                dropZones.forEach(zone => {
+                    const rect = zone.getBoundingClientRect();
+                    if (
+                        touch.clientX >= rect.left &&
+                        touch.clientX <= rect.right &&
+                        touch.clientY >= rect.top &&
+                        touch.clientY <= rect.bottom
+                    ) {
+                        handleDrop(zone);
+                        dropped = true;
+                    }
+                });
+
+                if (!dropped) {
+                    // ❌ No se soltó en zona válida → volver a su posición original
+                    draggedElement.style.position = "";
+                    draggedElement.style.left = "";
+                    draggedElement.style.top = "";
+                    draggedElement.style.zIndex = "";
+                    originalParent.appendChild(draggedElement);
+                }
+
+                draggedElement = null;
+            });
+        });
+        // -------------------------
+        // Lógica de validación de drop
+        // -------------------------
+        function handleDrop(zone) {
+            if (!draggedElement) return;
+
+            const correctAnswer = draggedElement.dataset.answer;
+            const zoneType = zone.dataset.type;
+
+            if (correctAnswer === zoneType) {
+                // ✅ Respuesta correcta
+                draggedElement.style.position = '';
+                draggedElement.style.left = '';
+                draggedElement.style.top = '';
+                draggedElement.style.zIndex = '';
+                zone.appendChild(draggedElement);
+
+                draggedElement.style.background = 'linear-gradient(135deg, #48bb78, #38a169)';
+                draggedElement.style.cursor = 'default';
+                draggedElement.draggable = false;
+                correctPlacements++;
+
+                if (correctPlacements === 3) {
+                    setTimeout(() => {
+                        document.getElementById('successMessage').style.display = 'block';
+                    }, 500);
+                }
+            } else {
+                // ❌ Respuesta incorrecta
+                draggedElement.style.background = 'linear-gradient(135deg, #e53e3e, #c53030)';
+                setTimeout(() => {
+                    draggedElement.style.background = 'var(--color-azul-degradado)';
+                }, 1000);
+
+                // regresar a su lugar original
+                draggedElement.style.position = "";
+                draggedElement.style.left = "";
+                draggedElement.style.top = "";
+                draggedElement.style.zIndex = "";
+                originalParent.appendChild(draggedElement);
+            }
+        }
+
+        // Animación de entrada para las tarjetas
+        function animateCards() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                        card.style.transition = 'all 0.5s ease';
+                    }, 100);
+                }, index * 100);
+            });
+        }
+
+        // Ejecutar animación al cargar
+        window.addEventListener('load', animateCards);
+    </script>
+</body>
+
+</html>

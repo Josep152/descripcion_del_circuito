@@ -1,0 +1,220 @@
+body {
+    background: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    margin-bottom: 100px;
+}
+
+/* Logo responsive */
+.logo-container {
+    text-align: right;
+}
+
+.logo {
+    width: clamp(100px, 15vw, 200px);
+            height: auto;
+    margin: 3vh 3vh;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.header h1 {
+    margin-bottom: 1rem;
+}
+
+.case-intro {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.case-intro h2 {
+    color: var(--color-azul);
+    font-size: var(--font-3);
+    margin-bottom: 1rem;
+}
+
+.pump-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.pump-details {
+    font-size: var(--font-6);
+}
+
+.pump-placeholder {
+    background: #f8fafc;
+    border: 2px dashed #d1d5db;
+    border-radius: var(--border-radius-md);
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gris);
+    font-weight: 600;
+}
+
+.section {
+    background: white;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.section h3 {
+    color: var(--color-azul);
+    font-size: var(--font-3);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.75rem;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+
+.data-table th {
+    background: var(--color-azul);
+    color: white;
+    font-weight: 600;
+}
+
+.data-table tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.chart-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.chart-container {
+    width: 100%;
+    height: auto;
+    border: 3px solid var(--color-azul);
+    padding: 1rem;
+    border-radius: var(--border-radius-md);
+}
+
+.regression-info {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    border-radius: var(--border-radius-md);
+}
+
+.regression-equation {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-azul);
+    text-align: center;
+    margin: 1rem 0;
+    font-family: 'Times New Roman', serif;
+}
+
+.parameters-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.parameter-card {
+    background: var(--color-azul-degradado);
+    color: white;
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+}
+
+.parameter-value {
+    font-size: var(--font-2);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.parameter-label {
+    font-size: var(--font-6);
+    opacity: 0.9;
+}
+
+.conclusion-section {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 2px solid var(--color-azul);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+}
+
+.conclusion-section h3 {
+    color: var(--color-azul);
+    margin-bottom: 1.5rem;
+}
+
+.interpretation-list {
+    list-style: none;
+    padding: 0;
+}
+
+.interpretation-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #d1d5db;
+    font-size: var(--font-6);
+}
+
+.interpretation-list li:last-child {
+    border-bottom: none;
+}
+
+.highlight-value {
+    background: var(--color-azul-degradado);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+
+    .pump-info,
+    .chart-section,
+    .parameters-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .parameter-value {
+        font-size: var(--font-3);
+    }
+}

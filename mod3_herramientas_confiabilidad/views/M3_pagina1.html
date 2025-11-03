@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
+    <link rel="stylesheet" href="../assets/css/ProgressBar.css">
+    <link rel="stylesheet" href="../assets/css/M3_pagina1.css">
+    <script type="text/javascript" src="../js/sidebar.js" defer></script>
+    <title>Confiabilidad en el Contexto Peruano</title>
+</head>
+
+<body>
+    <button class="back-page-btn" onclick="backPage()">
+        <span class="arrow">❮</span>
+    </button>
+
+    <nav id="sidebar" class="close">
+        <!-- Logo y botón de toggle -->
+        <div id="logo-seccion">
+            <a href="../index.html">
+                <img src="../assets/images/logo_blanco.png" height="10px" alt="logo">
+            </a>
+            <button id="toggle-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
+                    <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Barra de Progreso del curso -->
+        <div id="barra">
+            <span id="barra-titulo"><strong>Progreso del Curso</strong></span>
+            <div id="progreso-container">
+                <div id="progreso-barra"></div>
+                <span id="progreso-texto">0%</span>
+            </div>
+        </div>
+
+        <!-- Menú principal -->
+        <div id="menu-container"></div>
+    </nav>
+
+    <div class="audio-control-wrapper">
+        <div class="audio-player-container" id="audioContainer">
+            <!-- Indicadores mejorados de que se puede expandir -->
+            <div class="expand-indicators">
+                <div class="expand-dot"></div>
+                <div class="expand-dot"></div>
+                <div class="expand-dot"></div>
+            </div>
+
+            <!-- Botón de play/pause -->
+            <button class="play-pause-btn" id="playPauseBtn">
+                <svg id="playIcon" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                </svg>
+                <svg id="pauseIcon" viewBox="0 0 24 24" style="display: none">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                </svg>
+            </button>
+
+            <!-- Controles expandidos -->
+            <div class="expanded-controls">
+                <div class="controls-column">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar">
+                            <div class="progress-fill" id="progressFill">
+                                <div class="progress-thumb" id="progressThumb"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="volume-control">
+                        <button class="volume-btn" id="volumeToggle">
+                            <svg id="volumeIcon" viewBox="0 0 24 24">
+                                <path
+                                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+                            </svg>
+                            <svg id="muteIcon" viewBox="0 0 24 24" style="display: none">
+                                <path
+                                    d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+                            </svg>
+                        </button>
+
+                        <div class="volume-slider" id="volumeSlider">
+                            <div class="volume-fill" id="volumeFill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="close-btn" id="closeBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Audio element -->
+            <audio id="audioPlayer" preload="metadata">
+                <source src="../assets/audios/M3_pagina1.wav" type="audio/wav" />
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+    </div>
+
+    <div class="logo-container">
+        <img src="../assets/images/logo_color.png" alt="Logo AngloAmerican" class="logo">
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="gradient-text2">Implementación del RCM</h1>
+            <p>Esquema propuesto para implantar el Mantenimiento Centrado en Confiabilidad</p>
+        </header>
+
+        <div class="instruction-box">
+            <img src="../assets/gif/click.gif" alt="click-gif" class="gif">
+            <p>Explora el <span class="highlight-text">esquema de implementación</span> haciendo clic en cada paso del
+                timeline.
+                Descubre las <span class="highlight-text">7 preguntas fundamentales</span> del RCM y conoce los roles
+                del
+                <span class="highlight-text">equipo natural de trabajo</span> que harán posible el éxito del proceso.
+            </p>
+        </div>
+
+        <!-- Esquema de Implementación -->
+        <section class="section">
+            <h2 class="gradient-text">Esquema de Implementación del RCM</h2>
+
+            <div class="implementation-intro">
+                Se presenta el esquema propuesto para implantar el RCM. El <strong>éxito del proceso de
+                    implementación</strong>,
+                dependerá básicamente del <strong>desempeño del equipo natural de trabajo</strong>, el cual se encargará
+                de responder
+                las <strong>siete preguntas básicas del RCM</strong>, siguiendo el siguiente esquema:
+            </div>
+
+            <div class="gradient-text"
+                style="text-align: center; margin-top: 2rem; padding: 1rem; border-radius: var(--border-radius-md); font-size: var(--font-);">
+                <strong>Análisis de Modos y Efectos de Falla (AMEF)</strong>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline">
+                    <div class="timeline-step active" onclick="showStep(1)" data-step="1">
+                        Equipo Natural
+                    </div>
+                    <div class="timeline-step" onclick="showStep(2)" data-step="2">
+                        Selección Sistema
+                    </div>
+                    <div class="timeline-step" onclick="showStep(3)" data-step="3">
+                        Funciones
+                    </div>
+                    <div class="timeline-step" onclick="showStep(4)" data-step="4">
+                        Fallas Funcionales
+                    </div>
+                    <div class="timeline-step" onclick="showStep(5)" data-step="5">
+                        Modos de Fallas
+                    </div>
+                    <div class="timeline-step" onclick="showStep(6)" data-step="6">
+                        Efectos y Consecuencias
+                    </div>
+                    <div class="timeline-step" onclick="showStep(7)" data-step="7">
+                        Actividades de Mitigación
+                    </div>
+                </div>
+
+                <div class="step-details active" id="step1">
+                    <h4>1. Conformación de Equipo Natural de Trabajo</h4>
+                    <p>Formar el equipo multidisciplinario que liderará el proceso de implementación del RCM.</p>
+                </div>
+                <div class="step-details" id="step2">
+                    <h4>2. Selección de Sistema y Definición del Contexto Operacional</h4>
+                    <p>Identificar el sistema a analizar y establecer las condiciones operacionales específicas.</p>
+                </div>
+                <div class="step-details" id="step3">
+                    <h4>3. Definición de Funciones</h4>
+                    <p>Establecer claramente las funciones que debe cumplir el sistema en su contexto operacional.</p>
+                </div>
+                <div class="step-details" id="step4">
+                    <h4>4. Determinar Fallas Funcionales</h4>
+                    <p>Identificar las formas en que el sistema puede fallar en el cumplimiento de sus funciones.</p>
+                </div>
+                <div class="step-details" id="step5">
+                    <h4>5. Identificar Modos de Fallas</h4>
+                    <p>Analizar las causas específicas que pueden originar cada falla funcional identificada.</p>
+                </div>
+                <div class="step-details" id="step6">
+                    <h4>6. Efectos y Consecuencias de Fallas</h4>
+                    <p>Evaluar qué sucede cuando ocurre cada modo de falla y sus consecuencias en seguridad, ambiente y
+                        operaciones.</p>
+                </div>
+                <div class="step-details" id="step7">
+                    <h4>7. Aplicación de Hoja de Actividades de Mitigación</h4>
+                    <p>Definir las estrategias y actividades de mantenimiento para prevenir o mitigar las fallas
+                        identificadas.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Las 7 Preguntas del RCM -->
+        <section class="section">
+            <h2 class="gradient-text">Las Siete Preguntas del RCM</h2>
+
+            <p style="text-align: center; margin-bottom: 2rem; font-size: var(--font-6);">
+                La metodología MCC, propone un procedimiento que permite identificar las <strong>necesidades reales de
+                    mantenimiento</strong>
+                de los activos en su contexto operacional, a partir del análisis de las siguientes siete preguntas:
+            </p>
+
+            <div class="questions-grid">
+                <div class="question-card" onclick="toggleQuestion(this)">
+                    <div class="question-header">
+                        <div style="display: flex; align-items: center;">
+                            <div class="question-number">1</div>
+                            <span>¿Cuál es la función del activo?</span>
+                        </div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Resultado esperado:</strong> Diagramas de proceso</p>
+                        <p>Se debe definir claramente qué se espera que haga el activo en su contexto operacional
+                            específico.</p>
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleQuestion(this)">
+                    <div class="question-header">
+                        <div style="display: flex; align-items: center;">
+                            <div class="question-number">2</div>
+                            <span>¿De qué manera pueden fallar?</span>
+                        </div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Resultado esperado:</strong> Modos de falla</p>
+                        <p>Identificar todas las formas posibles en que el activo puede dejar de cumplir sus funciones.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleQuestion(this)">
+                    <div class="question-header">
+                        <div style="display: flex; align-items: center;">
+                            <div class="question-number">3</div>
+                            <span>¿Qué origina la falla?</span>
+                        </div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Resultado esperado:</strong> Causas de falla</p>
+                        <p>Determinar las causas raíz que provocan cada modo de falla identificado.</p>
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleQuestion(this)">
+                    <div class="question-header">
+                        <div style="display: flex; align-items: center;">
+                            <div class="question-number">4</div>
+                            <span>¿Qué pasa cuando falla?</span>
+                        </div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Resultado esperado:</strong> Efectos de falla</p>
+                        <p>Describir las consecuencias y efectos que se producen cuando ocurre la falla.</p>
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleQuestion(this)">
+                    <div class="question-header">
+                        <div style="display: flex; align-items: center;">
+                            <div class="question-number">5</div>
+                            <span>¿Importa si falla?</span>
+                        </div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Resultado esperado:</strong> Consecuencias de falla</p>
+                        <p>Evaluar la criticidad y el impacto de la falla en la operación, seguridad y ambiente.</p>
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleQuestion(this)">
+                    <div class="question-header">
+                        <div style="display: flex; align-items: center;">
+                            <div class="question-number">6</div>
+                            <span>¿Se puede hacer algo para prevenir la falla?</span>
+                        </div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Resultado esperado:</strong> Actividades de mitigación</p>
+                        <p>Identificar las tareas de mantenimiento preventivo que pueden evitar la falla.</p>
+                    </div>
+                </div>
+
+                <div class="question-card" onclick="toggleQuestion(this)">
+                    <div class="question-header">
+                        <div style="display: flex; align-items: center;">
+                            <div class="question-number">7</div>
+                            <span>¿Qué pasa si no podemos prevenir la falla?</span>
+                        </div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Resultado esperado:</strong> Actividades de mitigación alternativas</p>
+                        <p>Establecer acciones correctivas y planes de contingencia cuando la prevención no es posible.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Equipo Natural de Trabajo -->
+        <section class="section team-section">
+            <h2 class="gradient-text">Conformación de Equipo Natural de Trabajo</h2>
+
+            <div class="team-definition">
+                Un Equipo Natural de Trabajo, se define dentro del contexto del RCM, como un <strong>conjunto de
+                    personas de diferentes funciones de la organización</strong> que trabajan juntas por un período de
+                tiempo determinado en un <strong>entorno colaborativo</strong>, para analizar problemas
+                comunes de los distintos departamentos, apuntando al <strong>logro de un objetivo común</strong>.
+            </div>
+
+            <div class="team-circle">
+                <div class="team-center">RCM</div>
+
+                <div class="team-member member-1" onclick="showMember(1)">
+                    OPERADOR
+                </div>
+                <div class="team-member member-2" onclick="showMember(2)">
+                    INGENIERO DE PROCESOS
+                </div>
+                <div class="team-member member-3" onclick="showMember(3)">
+                    MANTENEDOR
+                </div>
+                <div class="team-member member-4" onclick="showMember(4)">
+                    PROGRAMADOR
+                </div>
+                <div class="team-member member-5" onclick="showMember(5)">
+                    ESPECIALISTAS
+                </div>
+                <div class="team-member member-6" onclick="showMember(6)">
+                    FACILITADOR
+                </div>
+            </div>
+
+            <div class="member-details" id="member1">
+                <h4>OPERADOR</h4>
+                <p><strong>Expertise:</strong> Experto en la operación y manejo de sistemas y equipos.</p>
+                <p>Aporta conocimiento práctico sobre el funcionamiento diario de los equipos y sistemas.</p>
+            </div>
+            <div class="member-details" id="member2">
+                <h4>INGENIERO DE PROCESOS</h4>
+                <p><strong>Expertise:</strong> Visión general del negocio</p>
+                <p>Proporciona perspectiva estratégica y comprensión integral de los procesos.</p>
+            </div>
+            <div class="member-details" id="member3">
+                <h4>MANTENEDOR</h4>
+                <p><strong>Expertise:</strong> Experto en reparación y mantenimiento</p>
+                <p>Contribuye con conocimiento técnico sobre reparaciones y estrategias de mantenimiento.</p>
+            </div>
+            <div class="member-details" id="member4">
+                <h4>PROGRAMADOR</h4>
+                <p><strong>Expertise:</strong> Visión sistemática de la actividad</p>
+                <p>Aporta enfoque metodológico y capacidad de planificación sistemática.</p>
+            </div>
+            <div class="member-details" id="member5">
+                <h4>ESPECIALISTAS</h4>
+                <p><strong>Expertise:</strong> Expertos en el área</p>
+                <p>Brindan conocimiento especializado en áreas técnicas específicas según el sistema analizado.</p>
+            </div>
+            <div class="member-details" id="member6">
+                <h4>FACILITADOR</h4>
+                <p><strong>Expertise:</strong> Asesor metodológico</p>
+                <p>Guía el proceso metodológico y facilita el trabajo colaborativo del equipo.</p>
+            </div>
+        </section>
+    </div>
+
+    <button id="continueBtn" style="position: fixed !important; bottom: 0.5rem; right: 0.5rem;" class="start-button"
+        onclick="goToNextPage()">Continuar <span class="arrow">❯</span></button>
+    <script src="../js/audioPlayer.js"></script>
+    <script src="../js/SCORM_Config.js"></script>
+    <script src="../../menu_principal/js/SCORM.js"></script>
+    <script src="../js/scorm-autosave.js"></script>
+    <script>
+
+        const paginaActual = "M3_pagina1.html"; 
+
+        function goToNextPage() {
+            ScormManager.guardarProgreso(paginaActual);
+            window.location.href = 'M3_pagina2.html';
+        }
+
+        function backPage() {
+            window.location.href = 'M3_inicio.html';
+        }
+
+        // Iniciar SCORM
+        ScormManager.initFromConfig();
+
+        document.addEventListener("DOMContentLoaded", () => {
+        const btn = document.getElementById("continueBtn");
+
+        const visitadas = ScormManager.obtenerPaginasVisitadas();
+        if (visitadas.includes(paginaActual)) {
+            // Ya visitada → habilitar botón sin obligar a repetir
+            btn.style.display = "block";
+        } else {
+            // No visitada → se mantiene deshabilitado hasta que termine interactivo
+            btn.style.display = "none";
+        }
+
+        window.habilitarContinuar = function () {
+            btn.style.display = "block";
+        };
+
+        // ✅ Actualizar barra de progreso (solo visual)
+        const progreso = ScormManager.cargarProgreso();
+        const porcentaje = progreso.score ? parseInt(progreso.score) : 0;
+
+        const barra = document.getElementById("progreso-barra");
+        const texto = document.getElementById("progreso-texto");
+
+        if (barra && texto) {
+            barra.style.width = porcentaje + "%";
+            texto.textContent = porcentaje + "%";
+        }
+    });
+
+        function showStep(stepNumber) {
+            // Remover active de todos los pasos y detalles
+            document.querySelectorAll('.timeline-step').forEach(step => step.classList.remove('active'));
+            document.querySelectorAll('.step-details').forEach(detail => detail.classList.remove('active'));
+
+            // Activar el paso seleccionado
+            document.querySelector(`[data-step="${stepNumber}"]`).classList.add('active');
+            document.getElementById(`step${stepNumber}`).classList.add('active');
+        }
+
+        function toggleQuestion(questionCard) {
+            const content = questionCard.querySelector('.question-content');
+            const isExpanded = questionCard.classList.contains('expanded');
+
+            // Cerrar todas las preguntas
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('expanded');
+                card.querySelector('.question-content').classList.remove('expanded');
+            });
+
+            // Si no estaba expandida, expandir esta
+            if (!isExpanded) {
+                questionCard.classList.add('expanded');
+                content.classList.add('expanded');
+            }
+        }
+
+
+        // Lista de secciones
+    const sections = [ "2", "3","4","5","6"];
+
+    // Objeto para marcar visitadas
+    let section_visited = {};
+
+    // Inicializar en false
+    sections.forEach(sec => section_visited[sec] = false);
+
+        function showMember(memberNumber) {
+            // Remover active de todos los miembros y detalles
+            document.querySelectorAll('.team-member').forEach(member => member.classList.remove('active'));
+            document.querySelectorAll('.member-details').forEach(detail => detail.classList.remove('active'));
+
+            // Activar el miembro seleccionado
+            document.querySelector(`.member-${memberNumber}`).classList.add('active');
+            document.getElementById(`member${memberNumber}`).classList.add('active');
+
+            // Marcar la sección como visitada
+        section_visited[memberNumber] = true;
+
+        // Revisar si todas ya fueron visitadas
+        checkAllVisited();
+        }
+
+        // Mostrar primer miembro por defecto
+        document.addEventListener('DOMContentLoaded', function () {
+            showMember(1);
+        });
+
+
+        function checkAllVisited() {
+        const allVisited = Object.values(section_visited).every(v => v === true);
+        if (allVisited) {
+            document.getElementById("continueBtn").style.display = "block";
+        }
+    }
+    </script>
+</body>
+
+</html>
