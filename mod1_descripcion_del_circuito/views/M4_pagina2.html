@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/M3_pagina3.css">
     <link rel="stylesheet" href="../assets/css/sidebar.css">
     <link rel="stylesheet" href="../assets/css/ProgressBar.css">
     <script type="text/javascript" src="../js/sidebar.js" defer></script>
-    <title>Introducción</title>
+    <title>Interactivo</title>
     <style>
         .container {
             max-width: 1500px;
@@ -463,7 +464,74 @@
             <p>Introducción - Conceptos Fundamentales</p>
         </div>
 
-        <!-- AÑADIR CONTENIDO AQUÍ -->
+        <!-- Instrucción del juego -->
+        <div class="card visible">
+            <h2>Relaciona Componentes con sus Funciones</h2>
+            <p style="margin-bottom: 25px;">Instrucción: Relaciona cada componente auxiliar de la tolva de almacenamiento con la función que cumple en la operación. Arrastra cada componente hacia su función correspondiente.</p>
+        </div>
+
+        <!-- Contenedor del juego de emparejamiento -->
+        <div class="matching-game-container">
+            <!-- Columna izquierda: Componentes -->
+            <div class="matching-section">
+                <h3 class="matching-title">Componentes</h3>
+                <div class="components-list" id="componentsList">
+                    <div class="matching-item component-item" draggable="true" data-id="1">
+                        <span class="item-label">Alimentador tornillo descarga tolva</span>
+                        <span class="item-code">(3410-CS-005)</span>
+                    </div>
+                    <div class="matching-item component-item" draggable="true" data-id="2">
+                        <span class="item-label">Balanza de ensacado</span>
+                        <span class="item-code">(3410-SC-001)</span>
+                    </div>
+                    <div class="matching-item component-item" draggable="true" data-id="3">
+                        <span class="item-label">Impresora térmica de etiquetas</span>
+                        <span class="item-code">(3410-XM-002-IL1)</span>
+                    </div>
+                    <div class="matching-item component-item" draggable="true" data-id="4">
+                        <span class="item-label">Transportador de rodillos motorizado</span>
+                        <span class="item-code">(3410-XM-002-CV1)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna derecha: Funciones -->
+            <div class="matching-section">
+                <h3 class="matching-title">Funciones</h3>
+                <div class="functions-list" id="functionsList">
+                    <div class="matching-item function-item drop-zone" data-function="a">
+                        <span class="function-letter">a)</span>
+                        <span class="function-text">Permite trasladar los sacos llenos hacia la zona de rotulado</span>
+                    </div>
+                    <div class="matching-item function-item drop-zone" data-function="b">
+                        <span class="function-letter">b)</span>
+                        <span class="function-text">Registra el peso del saco y asegura que la carga cumpla con el valor preestablecido</span>
+                    </div>
+                    <div class="matching-item function-item drop-zone" data-function="c">
+                        <span class="function-letter">c)</span>
+                        <span class="function-text">Carga el concentrado desde la tolva hacia los maxi sacos</span>
+                    </div>
+                    <div class="matching-item function-item drop-zone" data-function="d">
+                        <span class="function-letter">d)</span>
+                        <span class="function-text">Rotula los sacos con la información de peso y datos de identificación</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Área de conexiones visuales -->
+        <svg class="matching-connections" id="matchingConnections"></svg>
+
+        <!-- Botones de control del juego -->
+        <div class="matching-controls">
+            <button class="control-btn reset-btn" onclick="resetMatching()">Reintentar</button>
+            <button class="control-btn submit-btn" onclick="checkMatching()">Verificar Respuesta</button>
+        </div>
+
+        <!-- Área de retroalimentación -->
+        <div class="feedback-area" id="feedbackArea" style="display: none;">
+            <div class="feedback-message" id="feedbackMessage"></div>
+        </div>
 
     </div>
     <button id="continueBtn" style="position: fixed !important; bottom: 0.5rem; right: 0.5rem;" class="start-button"
@@ -546,9 +614,160 @@
             });
         }
 
+        // ===== LÓGICA DEL JUEGO DE EMPAREJAMIENTO =====
+        let draggedElement = null;
+        let matchingPairs = {}; // Almacena los emparejamientos: {componentId: functionLetter}
+
+        // Solución correcta: 1→c, 2→b, 3→d, 4→a
+        const correctMatches = {
+            '1': 'c',
+            '2': 'b',
+            '3': 'd',
+            '4': 'a'
+        };
+
+        // Inicializar eventos de drag and drop
+        function initializeMatching() {
+            const componentItems = document.querySelectorAll('.component-item');
+            const functionItems = document.querySelectorAll('.function-item.drop-zone');
+
+            // Eventos para componentes arrastrables
+            componentItems.forEach(item => {
+                item.addEventListener('dragstart', handleMatchingDragStart);
+                item.addEventListener('dragend', handleMatchingDragEnd);
+            });
+
+            // Eventos para funciones (zonas de drop)
+            functionItems.forEach(zone => {
+                zone.addEventListener('dragover', handleMatchingDragOver);
+                zone.addEventListener('drop', handleMatchingDrop);
+                zone.addEventListener('dragleave', handleMatchingDragLeave);
+            });
+        }
+
+        function handleMatchingDragStart(e) {
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleMatchingDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.function-item').forEach(zone => {
+                zone.classList.remove('drag-over');
+            });
+        }
+
+        function handleMatchingDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            this.classList.add('drag-over');
+        }
+
+        function handleMatchingDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleMatchingDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('drag-over');
+
+            if (draggedElement && draggedElement.classList.contains('component-item')) {
+                const componentId = draggedElement.getAttribute('data-id');
+                const functionLetter = this.getAttribute('data-function');
+
+                // Si la función ya tiene un componente, devolverlo al área disponible
+                const existingComponent = this.querySelector('.component-item');
+                if (existingComponent) {
+                    document.getElementById('componentsList').appendChild(existingComponent);
+                }
+
+                // Mover el componente a la función
+                this.appendChild(draggedElement);
+                this.classList.add('matched');
+
+                // Guardar el emparejamiento
+                matchingPairs[componentId] = functionLetter;
+
+                // Reinicializar eventos de drag
+                initializeMatching();
+            }
+        }
+
+        // Función para verificar los emparejamientos
+        function checkMatching() {
+            const feedbackArea = document.getElementById('feedbackArea');
+            const feedbackMessage = document.getElementById('feedbackMessage');
+            let isCorrect = true;
+            let matchedCount = 0;
+
+            // Verificar cada emparejamiento
+            for (let componentId in correctMatches) {
+                if (matchingPairs[componentId]) {
+                    matchedCount++;
+                    if (matchingPairs[componentId] !== correctMatches[componentId]) {
+                        isCorrect = false;
+                    }
+                } else {
+                    isCorrect = false;
+                }
+            }
+
+            // Mostrar retroalimentación
+            feedbackArea.style.display = 'block';
+            feedbackMessage.className = 'feedback-message';
+
+            if (matchedCount < 4) {
+                feedbackMessage.classList.add('info');
+                feedbackMessage.innerHTML = '⚠️ Por favor, completa todos los emparejamientos antes de verificar.';
+            } else if (isCorrect) {
+                feedbackMessage.classList.add('success');
+                feedbackMessage.innerHTML = '✓ ¡Excelente! Has relacionado correctamente todos los componentes con sus funciones. Ahora puedes continuar.';
+                
+                // Habilitar botón de continuar
+                const continueBtn = document.getElementById('continueBtn');
+                continueBtn.style.opacity = '1';
+                continueBtn.style.pointerEvents = 'auto';
+            } else {
+                feedbackMessage.classList.add('error');
+                feedbackMessage.innerHTML = '✗ Algunos emparejamientos no son correctos. Revisa las relaciones e intenta nuevamente.';
+            }
+
+            // Scroll a la retroalimentación
+            feedbackArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Función para reiniciar el juego
+        function resetMatching() {
+            const componentsList = document.getElementById('componentsList');
+            const functionItems = document.querySelectorAll('.function-item.drop-zone');
+            const feedbackArea = document.getElementById('feedbackArea');
+
+            // Mover todos los componentes de vuelta al área disponible
+            functionItems.forEach(zone => {
+                const component = zone.querySelector('.component-item');
+                if (component) {
+                    componentsList.appendChild(component);
+                }
+                zone.classList.remove('matched');
+            });
+
+            // Limpiar emparejamientos
+            matchingPairs = {};
+
+            // Ocultar retroalimentación
+            feedbackArea.style.display = 'none';
+
+            // Reinicializar eventos
+            initializeMatching();
+        }
+
         // Inicialización cuando se carga la página
         document.addEventListener('DOMContentLoaded', function () {
             observeCards();
+            initializeMatching();
 
             // Efecto hover para las tarjetas de concepto
             document.querySelectorAll('.concept-item').forEach(item => {

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/M2_pagina3.css">
+    <link rel="stylesheet" href="../assets/css/M1_pagina10.css">
     <link rel="stylesheet" href="../assets/css/sidebar.css">
     <link rel="stylesheet" href="../assets/css/ProgressBar.css">
     <script type="text/javascript" src="../js/sidebar.js" defer></script>
@@ -460,11 +460,78 @@
 
     <div class="container">
         <div class="header">
-            <h1 class="fade-in gradient-text2 font-weight: normal;">Estrategias de Mantenimiento</h1>
-            <p>Introducción - Conceptos Fundamentales</p>
+            <h1 class="fade-in gradient-text2 font-weight: normal;">Ejercicio</h1>
+            <p>¡Pongamos a prueba lo aprendido!</p>
         </div>
 
-        <!-- AÑADIR CONTENIDO AQUÍ -->
+        <!-- Instrucción del juego -->
+        <div class="card visible">
+            <h2>Ordena el Proceso de Producción de Concentrado de Molibdeno</h2>
+            <p style="margin-bottom: 25px;">Instrucción: Arrastra los bloques para ordenar las principales etapas del proceso de producción de concentrado de molibdeno, desde la alimentación inicial hasta la obtención del producto seco.</p>
+        </div>
+
+        <!-- Contenedor del juego -->
+        <div class="game-container">
+            <!-- Área de bloques disponibles -->
+            <div class="game-section">
+                <h3 class="section-title">Bloques Disponibles</h3>
+                <div class="blocks-available" id="blocksAvailable">
+                    <div class="draggable-block" draggable="true" data-order="2">
+                        <span class="block-number">1</span>
+                        <span class="block-text">Cajón distribuidor de concentrado Mo (3410-DB-003)</span>
+                    </div>
+                    <div class="draggable-block" draggable="true" data-order="4">
+                        <span class="block-number">2</span>
+                        <span class="block-text">Bombas de alimentación a filtro Mo (3410-PU-017/018/037)</span>
+                    </div>
+                    <div class="draggable-block" draggable="true" data-order="3">
+                        <span class="block-number">3</span>
+                        <span class="block-text">Tanques de concentrado molibdeno 1, 2 y 3 (3410-TK-007/008/009)</span>
+                    </div>
+                    <div class="draggable-block" draggable="true" data-order="5">
+                        <span class="block-number">4</span>
+                        <span class="block-text">Filtro de concentrado de Mo (3410-FL-001)</span>
+                    </div>
+                    <div class="draggable-block" draggable="true" data-order="1">
+                        <span class="block-number">5</span>
+                        <span class="block-text">Descarga del espesador (65% sólidos)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Área de secuencia correcta -->
+            <div class="game-section">
+                <h3 class="section-title">Secuencia del Proceso</h3>
+                <div class="sequence-area" id="sequenceArea">
+                    <div class="drop-zone" data-position="1" style="margin-top: 15px;">
+                        <span class="zone-label">Paso 1</span>
+                    </div>
+                    <div class="drop-zone" data-position="2" style="margin-top: 15px;">
+                        <span class="zone-label">Paso 2</span>
+                    </div>
+                    <div class="drop-zone" data-position="3" style="margin-top: 15px;">
+                        <span class="zone-label">Paso 3</span>
+                    </div>
+                    <div class="drop-zone" data-position="4" style="margin-top: 15px;">
+                        <span class="zone-label">Paso 4</span>
+                    </div>
+                    <div class="drop-zone" data-position="5" style="margin-top: 15px;">
+                        <span class="zone-label">Paso 5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de control del juego -->
+        <div class="game-controls">
+            <button class="control-btn reset-btn" onclick="resetGame()">Reintentar</button>
+            <button class="control-btn submit-btn" onclick="checkSequence()">Verificar Respuesta</button>
+        </div>
+
+        <!-- Área de retroalimentación -->
+        <div class="feedback-area" id="feedbackArea" style="display: none;">
+            <div class="feedback-message" id="feedbackMessage"></div>
+        </div>
 
     </div>
     <button id="continueBtn" style="position: fixed !important; bottom: 0.5rem; right: 0.5rem;" class="start-button"
@@ -547,9 +614,150 @@
             });
         }
 
+        // ===== LÓGICA DEL JUEGO INTERACTIVO =====
+        let draggedElement = null;
+        let gameCompleted = false;
+
+        // Inicializar eventos de drag and drop
+        function initializeDragAndDrop() {
+            const draggableBlocks = document.querySelectorAll('.draggable-block');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            // Eventos para bloques arrastrables
+            draggableBlocks.forEach(block => {
+                block.addEventListener('dragstart', handleDragStart);
+                block.addEventListener('dragend', handleDragEnd);
+            });
+
+            // Eventos para zonas de drop
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', handleDragOver);
+                zone.addEventListener('drop', handleDrop);
+                zone.addEventListener('dragleave', handleDragLeave);
+            });
+        }
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.classList.remove('drag-over');
+            });
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            this.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('drag-over');
+
+            if (draggedElement) {
+                // Si la zona ya tiene un bloque, devolverlo al área disponible
+                const existingBlock = this.querySelector('.draggable-block');
+                if (existingBlock) {
+                    document.getElementById('blocksAvailable').appendChild(existingBlock);
+                }
+
+                // Mover el bloque arrastrado a la zona
+                this.appendChild(draggedElement);
+                this.classList.add('filled');
+
+                // Reinicializar eventos de drag
+                initializeDragAndDrop();
+            }
+        }
+
+        // Función para verificar la secuencia
+        function checkSequence() {
+            const dropZones = document.querySelectorAll('.drop-zone');
+            const feedbackArea = document.getElementById('feedbackArea');
+            const feedbackMessage = document.getElementById('feedbackMessage');
+            let isCorrect = true;
+            let filledCount = 0;
+
+            // Verificar que todas las zonas estén llenas
+            dropZones.forEach(zone => {
+                const block = zone.querySelector('.draggable-block');
+                if (block) {
+                    filledCount++;
+                    const order = parseInt(block.getAttribute('data-order'));
+                    const position = parseInt(zone.getAttribute('data-position'));
+                    
+                    if (order !== position) {
+                        isCorrect = false;
+                    }
+                } else {
+                    isCorrect = false;
+                }
+            });
+
+            // Mostrar retroalimentación
+            feedbackArea.style.display = 'block';
+            feedbackMessage.className = 'feedback-message';
+
+            if (filledCount < 5) {
+                feedbackMessage.classList.add('info');
+                feedbackMessage.innerHTML = '⚠️ Por favor, completa todos los pasos del proceso antes de verificar.';
+            } else if (isCorrect) {
+                feedbackMessage.classList.add('success');
+                feedbackMessage.innerHTML = '✓ ¡Excelente! Has ordenado correctamente todas las etapas del proceso de producción de concentrado de molibdeno. Ahora puedes continuar.';
+                gameCompleted = true;
+                
+                // Habilitar botón de continuar
+                const continueBtn = document.getElementById('continueBtn');
+                continueBtn.style.opacity = '1';
+                continueBtn.style.pointerEvents = 'auto';
+            } else {
+                feedbackMessage.classList.add('error');
+                feedbackMessage.innerHTML = '✗ La secuencia no es correcta. Revisa el orden de los pasos e intenta nuevamente.';
+            }
+
+            // Scroll a la retroalimentación
+            feedbackArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Función para reiniciar el juego
+        function resetGame() {
+            const blocksAvailable = document.getElementById('blocksAvailable');
+            const dropZones = document.querySelectorAll('.drop-zone');
+            const feedbackArea = document.getElementById('feedbackArea');
+
+            // Mover todos los bloques de vuelta al área disponible
+            dropZones.forEach(zone => {
+                const block = zone.querySelector('.draggable-block');
+                if (block) {
+                    blocksAvailable.appendChild(block);
+                }
+                zone.classList.remove('filled');
+            });
+
+            // Ocultar retroalimentación
+            feedbackArea.style.display = 'none';
+            gameCompleted = false;
+
+            // Reinicializar eventos
+            initializeDragAndDrop();
+        }
+
         // Inicialización cuando se carga la página
         document.addEventListener('DOMContentLoaded', function () {
             observeCards();
+            initializeDragAndDrop();
 
             // Efecto hover para las tarjetas de concepto
             document.querySelectorAll('.concept-item').forEach(item => {
